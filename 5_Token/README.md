@@ -32,11 +32,15 @@
   }
   ```
 
+  When transfering large amout of tokens, though the balance of msg.sender is way less than _value, the condition is still met because of underflow.
   ```
   require(balances[msg.sender] - _value >= 0)
   ```
 
-  In above stamemen, though the balance of msg.sender is way less than _value, the condition is still met because of underflow.
+  Because of overflow, the sender account could potentially get large amount of token:
+  ```
+  balances[_to] += _value;
+  ```
 
   It also can potentially wipe out the tokens of transferTo account because of overflow.
   ```
